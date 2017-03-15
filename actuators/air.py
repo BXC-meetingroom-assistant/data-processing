@@ -13,8 +13,6 @@ def check_status_code(url):
     else:
         return False
 
-    pass
-
 
 def enable():
     return(check_status_code(urls['on']))
