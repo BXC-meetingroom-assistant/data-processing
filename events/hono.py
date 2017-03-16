@@ -20,7 +20,15 @@ class HelloWorld(MessagingHandler):
         event.container.create_receiver(conn, source=self.events)
 
     def on_message(self, event):
-        print(event.message.body)
+        try:
+            body = json.loads(event.message.body)
+            if 'topic' in body:
+                if body['topic'] == 'meeting-room-assistant':
+                    print('yay')
+                if body['topic'] == 'bcx/xdk.7cec79d330df/things/twin/commands/modify':
+                    print('yay')
+        except json.decoder.JSONDecodeError as e:
+            pass
 
 
 with open('../settings.json') as data_file:
