@@ -26,13 +26,20 @@ class HelloWorld(MessagingHandler):
 
     def on_message(self, event):
         try:
-            body = json.loads(event.message.body.decode("utf-8"))
-            if 'topic' in body:
-                if body['topic'] == 'meeting-room-assistant':
-                    print('yay')
-                if body['topic'] == 'bcx/xdk.7cec79d330df/things/twin/commands/modify':
-                    # here pass to the procesessing function 
-                        bcx_dataprocessing.dataprocessing(event)
+            # print(event.message.properties['device_id'])
+                  # : 'meeting-room-assistant'}'])
+            if 'device_id' in event.message.properties and event.message.properties['device_id'] == "meeting-room-assistant":
+                body = json.loads(event.message.body.decode("utf-8"))
+                people = int(body['count'])
+                bcx_dataprocessing.dataprocessing(people)
+            # if body:
+            #     pass
+            # if 'topic' in body:
+            #     if body['topic'] == 'bcx/meeting-room-assistant':
+            #         print('yay')
+            #     if body['topic'] == 'bcx/xdk.7cec79d330df/things/twin/commands/modify':
+            #         # here pass to the procesessing function
+            #             people = 0
         except json.decoder.JSONDecodeError as e:
             pass
 
